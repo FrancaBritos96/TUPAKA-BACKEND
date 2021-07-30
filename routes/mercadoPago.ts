@@ -14,45 +14,56 @@ const bodyParser = require('body-parser');
 
 const mercadoPagoRoutes = Router();
 // SDK de Mercado Pago
-const mercadopago = require ('mercadopago');
+const mercadopago = require('mercadopago');
 
 //middleware
 
-//app.use(bodyParser.urlencoded({ extended: false }))
 
 // Agrega credenciales
 mercadopago.configure({
-    access_token: 'APP_USR-2950527085580-073003-cc208b447790e4820b5bb241fd7eab92-259070893'
-  });
+  access_token: 'APP_USR-6623451607855904-111502-1f258ab308efb0fb26345a2912a3cfa5-672708410'
+});
+
+//USUARIO DE PRUEBA MERCADO PAGO
+//"id": 772004350,
+// "nickname": "TETE7159651",
+//  "password": "qatest4286",
+//  "site_status": "active",
+// "email": "test_user_20926595@testuser.com"
 
 //routes
 mercadoPagoRoutes.post('/', verificarToken, async (req: any, res: Response) => {
 
-// Crea un objeto de preferencia
+  // Crea un objeto de preferencia
 
-const precio = parseInt(req.body.precio);
+  const precio = parseInt(req.body.precio);
 
 
-let preference = {
+  let preference = {
     items: [
       {
-        title:"Productos Tupaka seleccionados",
+        title: "Productos Tupaka seleccionados",
         unit_price: precio,
         quantity: 1,
       }
     ],
-    
-  };
-  
-  mercadopago.preferences.create(preference)
-  .then(function(response:any){
-      console.log(response.body)
-    res.redirect(response.body.init_point);
-   
-  }).catch(function(error:any){
-    console.log(error);
 
-  });
+  };
+
+  mercadopago.preferences.create(preference)
+    .then(function (response: any) {
+      console.log(response.body)
+      // res.redirect(response.body.init_point);
+      res.json({
+        estado: "success",
+        mensaje: "Link de pago creado",
+        data: response.body.init_point
+      });
+
+    }).catch(function (error: any) {
+      console.log(error);
+
+    });
 });
 
 export default mercadoPagoRoutes;
