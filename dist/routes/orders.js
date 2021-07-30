@@ -80,7 +80,7 @@ orderRoutes.post('/createOrder', authentication_1.verificarToken, (req, res) => 
         res.json({
             estado: "Success",
             mensaje: "Pedido creado con exito",
-            data: insertOrder
+            data: insertOrder.insertId
         });
     }
     catch (error) {

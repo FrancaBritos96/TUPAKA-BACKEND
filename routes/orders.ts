@@ -89,7 +89,7 @@ orderRoutes.post('/createOrder', verificarToken, async (req: any, res: Response)
         res.json({
             estado: "Success",
             mensaje: "Pedido creado con exito",
-            data: insertOrder
+            data: insertOrder.insertId
         })
     }
     catch (error) {
